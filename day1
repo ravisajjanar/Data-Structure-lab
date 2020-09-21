@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct student
+{
+    int id;
+    int age;
+    int marks;
+};
+
+int main()
+{
+    struct student s[100];
+    int n,i=0;
+    printf("Enter the no of students :");
+    scanf("%d",&n);
+    printf("Hello welcome to admission process!\n");
+
+    for(i=0;i<n;i++){
+
+    printf("\nEnter the Student id :");
+    scanf("%d",&s[i].id);
+
+    printf("Enter the age :");
+    scanf("%d",&s[i].age);
+
+    printf("Enter the marks :");
+    scanf("%d",&s[i].marks);
+
+    if(s[i].age>20){
+            if(s[i].marks>=0 && s[i].marks<=100){
+                printf("\n data is valid");
+
+                if(s[i].marks>=65)
+                    printf("\n And You are eligible for the Admission");
+                else
+                    printf("\n But You are NOT eligible for admission due to marks limit");
+            }
+
+            else
+                printf("\n Invalid marks");
+
+            }
+    else
+        printf("\nNOT ELIGIBLE due to age limits mismatch");
+
+
+    }
+
+ return 0;
+}
+
