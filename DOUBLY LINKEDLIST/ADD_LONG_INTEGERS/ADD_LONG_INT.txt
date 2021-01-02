@@ -1,0 +1,149 @@
+#include<stdio.h>
+#include<conio.h>
+#include<alloc.h>
+#include<process.h>
+
+struct node
+{
+  int info;
+  struct node *link;
+};
+typedef struct node *NODE;
+NODE insert_front(int, NODE);
+NODE insert_rear(int, NODE );
+NODE getnode()
+{
+NODE x;
+x=(NODE)malloc(sizeof(struct node));
+if(x==NULL)
+ {
+  printf("mem full\n");
+  exit(0);
+ }
+ return x;
+}
+void freenode(NODE x)
+{
+free(x);
+}
+NODE read_number(NODE head)
+{
+char c;
+while((c=getche())!='\r')
+{
+ if(isdigit(c))
+ head=insert_front(c-'0',head);
+ else
+ {
+ printf("invalid integer\n");
+ exit(1);
+ }
+}
+printf("\n");
+return head;
+}
+NODE add_long(NODE h1,NODE h2,NODE h3)
+{
+ NODE c,c1,c2,h;
+ int sum,carry,digit;
+ carry=0;
+ c1=h1->link;
+ c2=h2->link;
+ while(c1!=h1 && c2!=h2)
+ {
+ sum=c1->info+c2->info+carry;
+ digit=sum%10;
+ carry=sum/10;
+ h3=insert_rear(digit,h3);
+ c1=c1->link;
+ c2=c2->link;
+ }
+ if(c1!=h1)
+ c=c1,h=h1;
+ else
+ c=c2,h=h2;
+ while(c!=h)
+ {
+ sum=c->info+carry;
+ digit=sum%10;
+ carry=sum/10;
+ h3=insert_rear(digit,h3);
+ c=c->link;
+ }
+ if(carry==1)
+ h3=insert_rear(carry,h3);
+ return h3;
+}
+NODE insert_front(int item, NODE last)
+{
+NODE temp;
+temp=getnode();
+temp->info=item;
+if(last==NULL)
+last=temp;
+else
+temp->link=last->link;
+last->link=temp;
+return last;
+}
+NODE insert_rear(int item, NODE last)
+{
+NODE temp;
+temp=getnode();
+temp->info=item;
+if(last==NULL)
+last=temp;
+else
+temp->link=last->link;
+last->link=temp;
+return last;
+}
+void display_number(NODE head)
+{
+ int k,n,*a;
+ NODE cur;
+ if(head->link==head)
+ {
+ printf("number doesnot exist\n");
+ return;
+ }
+ n=head->info;
+ a=(int *)malloc(n*sizeof(int));
+ cur=head->link,k=0;
+ while(cur!=head)
+ {
+ a[k++]=cur->info;
+ cur=cur->link;
+ }
+ while(--k!=-1)
+ printf("%d",a[k]);
+ printf("\n");
+}
+void main()
+{
+NODE h1,h2,h3;
+h1=getnode();
+h2=getnode();
+h3=getnode();
+h1->link=h1;
+h2->link=h2;
+h3->link=h3;
+h1->info=h2->info=h3->info=0;
+printf("enter the first number\n");
+h1=read_number(h1);
+printf("enter the second number\n");
+h2=read_number(h2);
+h3=add_long(h1,h2,h3);
+printf("num1=");
+display_number(h1);
+printf("num2=");
+display_number(h2);
+printf("sum=");
+display_number(h3);
+}
+
+
+
+
+
+
